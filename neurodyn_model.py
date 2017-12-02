@@ -1,8 +1,6 @@
 
 # coding: utf-8
 
-# In[15]:
-
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,16 +11,9 @@ from scipy import interpolate
 import os
 import time
 
-
-# In[241]:
-
-
 Ipath = os.getcwd() + "/IforRealNeuron.csv"
 
 Idat = np.genfromtxt(Ipath, delimiter=',')
-
-
-# In[221]:
 
 
 #Scaling Values
@@ -33,10 +24,6 @@ C_scale = 1e12 # F to pF
 # The scales for I * R should match the scale for V
 I_scale = 1e15 # A to fA
 R_scale = 1e-12 # O to ...
-
-
-# In[225]:
-
 
 # Voltages
 # Chip bias voltage
@@ -92,8 +79,6 @@ for i in xrange(1,7):
 g_f = 1 / (C_gate * V_unit)
 
 
-# In[226]:
-
 
 am = np.array([0, 0, 120, 400, 800, 1023, 1023]) * I_master / 1024 * g_f
 bm = np.array([1023, 1023, 1023, 1023, 0, 0, 0]) * I_master / 1024 * g_f
@@ -103,9 +88,6 @@ bh = np.array([0, 0, 0, 0, 41, 50, 70]) * I_master / 1024 * g_f
 
 an = np.array([0, 0, 0, 0, 18, 5, 43]) * I_master / 1024 * g_f
 bn = np.array([1, 0, 0, 1, 0, 0, 1]) * I_master / 1024 * g_f
-
-
-# In[215]:
 
 
 def sigma(vBiask, V, sign = 1):
@@ -145,8 +127,6 @@ def beta_spline(V, x, vBias=vBias, bm=bm, bh=bh, bn=bn):
 
 # Here we define our system as well as the injected current
 
-# In[217]:
-
 
 fIdat = interpolate.interp1d(np.arange(0,len(Idat)), Idat) #Used to interpolate time points that are undefined in Idat
 
@@ -174,12 +154,7 @@ def neuron(y, t):
 
     return dydt
 
-
-
 # We set the initial conditions and time window
-
-# In[218]:
-
 
 y0 = [1.09 * V_scale, 0.5 * I_scale / (V_scale * C_scale), 
       0.5 * I_scale / (V_scale * C_scale), 0.5 * I_scale / (V_scale * C_scale)] #initial conditions
@@ -192,28 +167,7 @@ print("Starting...")
 sol = odeint(neuron, y0, t, args=())
 print "Time elapsed:", time.time() - start_time
 
-
-# Plot the data
-
-# In[219]:
-
-
-plt.subplot(2,1,1)
-plt.plot(t, sol[:,0], 'b')
-plt.ylabel('Membrane Voltage')
-
-plt.subplot(2,1,2)
-plt.plot(t, fIdat(t * 5e3) * I_inj_scale, 'r')
-plt.ylabel('Injected Current')
-
-plt.tight_layout()
-plt.show()
-
-
 # Save data
-
-# In[233]:
-
 
 # add time to data
 data = np.insert(sol, 0, t, axis=1)
