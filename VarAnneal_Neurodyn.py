@@ -44,7 +44,7 @@ from varanneal import va_ode
 # Load in the input current
 
 
-Ipath = os.get_cwd() + "/IforRealNeuron.csv"
+Ipath = os.getcwd() + "/IforRealNeuron.csv"
 Idat = np.genfromtxt(Ipath, delimiter=',')
 
 
@@ -276,7 +276,7 @@ gammas_all = g0 * alpha**beta_array
 
 
 
-data = np.load(os.get_cwd() + "/ode_data.npy")
+data = np.load(os.getcwd() + "/ode_data.npy")
 times_data = data[:, 0]
 dt_data = times_data[1] - times_data[0]
 N_data = len(times_data)
