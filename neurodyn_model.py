@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from scipy.integrate import odeint
 from scipy.integrate import ode
 from scipy import interpolate
-
+import pickle
 import os
 import time
 
@@ -23,7 +23,13 @@ C_scale = 1e12 # F to pF
 
 # The scales for I * R should match the scale for V
 I_scale = 1e15 # A to fA
+# Injected current scale factor
+I_inj_scale = (0.018) * 1e-9 * I_scale
 R_scale = 1e-12 # O to ...
+
+scale_factors = np.array([V_scale, C_scale, I_scale, I_inj_scale, R_scale])
+#Save scaling values for later
+np.save('neurodyn/scale_factors.npy', scale_factors)
 
 # Voltages
 # Chip bias voltage
@@ -38,8 +44,6 @@ I_master = 1.25e-9 * I_scale
 I_voltage = 230e-9 * I_scale
 # Reference Current(?)
 I_ref = 85e-9 * I_scale
-# Injected current scale factor
-I_inj_scale = (0.018) * 1e-9 * I_scale
 
 # Capacitances
 # Membrane Capacitance
@@ -89,7 +93,22 @@ bh = np.array([0, 0, 0, 0, 41, 50, 70]) * I_master / 1024 * g_f
 an = np.array([0, 0, 0, 0, 18, 5, 43]) * I_master / 1024 * g_f
 bn = np.array([1, 0, 0, 1, 0, 0, 1]) * I_master / 1024 * g_f
 
+# Saving the parameters
+model_params = []
+model_params.append(g)
+model_params.append(E_rev)
+model_params.append(vBias)
+model_params.append(am)
+model_params.append(bm)
+model_params.append(ah)
+model_params.append(bh)
+model_params.append(an)
+model_params.append(bn)
 
+with open("neurodyn/model_params.txt", "wb") as fp:
+    pickle.dump(model_params ,fp)
+
+# Define the model
 def sigma(vBiask, V, sign = 1):
     mu = 0.7
     Ut = 26e-3 * V_scale

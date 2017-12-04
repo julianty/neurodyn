@@ -22,7 +22,7 @@ import numpy as np
 from scipy import interpolate
 from varanneal import va_ode
 import os, time
-
+import pickle
 
 import matplotlib
 matplotlib.use('nbagg')
@@ -44,98 +44,32 @@ from varanneal import va_ode
 # Load in the input current
 
 
-Ipath = os.get_cwd() + "/IforRealNeuron.csv"
+Ipath = os.getcwd() + "/IforRealNeuron.csv"
 Idat = np.genfromtxt(Ipath, delimiter=',')
 
+# Load in the parameters
+sf = np.load("neurodyn/scale_factors.npy")
+with open("neurodyn/model_params.txt", "rb") as fp:
+    model_params = pickle.load(fp)
 
-# Set parameters
+# Unpack parameters
+V_scale = sf[0]
+C_scale = sf[1]
+I_scale = sf[2]
+I_inj_scale = sf[3]
+R_scale = sf[4]
 
-
-#Scaling Values
-# The scale for V * C should match the scale for I
-V_scale = 1e3 # V to mV
-C_scale = 1e12 # F to pF
-
-# The scales for I * R should match the scale for V
-I_scale = 1e15 # A to fA
-R_scale = 1e-12 # O to ...
-
-
-# Voltages
-# Chip bias voltage
-V_ref = 1 * V_scale
-# Unit Volt(?)
-V_unit = 26e-3 * V_scale
-
-# Currents
-# Master current(?)
-I_master = 1.25e-9 * I_scale
-# Voltage(?)
-I_voltage = 230e-9 * I_scale
-# Reference Current(?)
-I_ref = 85e-9 * I_scale
-# Injected current scale factor
-I_inj_scale = (0.018) * 1e-9 * I_scale
-
-# Capacitances
-# Membrane Capacitance
+mp = model_params
 C_m = 4e-12 * C_scale
-# Gate capacitance
-C_gate = 5e-12 * C_scale
-
-# Resistances
-Res = 1.63e6 * R_scale
-R_bias = 1.85e6  * R_scale
-R_factor = 700e3 * R_scale
-R_factor2 = 50e3 * R_scale
-
-# Scale Factors
-kappa = 0.7
-
-# Hodgkin Huxley Parameters
-g0 = [800, 160, 15] #maximal conductances
-e_rev = [300, -210, -190] #reversal potentials in mV
-
-# Scaling H-H parameters for chip
-g = np.multiply(g0,(kappa / V_unit) * (I_master / 1024))
-E_rev = np.multiply(e_rev,(I_voltage / 1024) * Res) + V_ref
-
-
-# Conductance Dynamics
-vBias = np.zeros(7)
-vHigh = V_ref + R_bias * I_voltage
-vLow = V_ref - R_bias * I_voltage
-I_factor = (vHigh - vLow) / R_factor
-vBias[0] = vLow + I_factor * R_factor2
-
-for i in xrange(1,7):
-    #[635.2, 756.8, 878.42, 1000, 1121.57, 1243.14, 1364.7] in mV
-    vBias[i] = vBias[i - 1] + I_factor * 2*R_factor2 
-    
-g_f = 1 / (C_gate * V_unit) 
-    
-am = np.array([0, 0, 120, 400, 800, 1023, 1023]) * I_master / 1024 * g_f
-bm = np.array([1023, 1023, 1023, 1023, 0, 0, 0]) * I_master / 1024 * g_f
-
-ah = np.array([237, 80, 0, 0, 0, 0, 0]) * I_master / 1024 * g_f 
-bh = np.array([0, 0, 0, 0, 41, 50, 70]) * I_master / 1024 * g_f
-
-an = np.array([0, 0, 0, 0, 18, 5, 43]) * I_master / 1024 * g_f
-bn = np.array([1, 0, 0, 1, 0, 0, 1]) * I_master / 1024 * g_f
-
-
-#Wrapping up the parameters
-model_params = []
-model_params.append(g)
-model_params.append(E_rev)
-model_params.append(vBias)
-model_params.append(am)
-model_params.append(bm)
-model_params.append(ah)
-model_params.append(bh)
-model_params.append(an)
-model_params.append(bn)
-
+g = mp[0]
+E_rev = mp[1]
+vBias = mp[2]
+am = mp[3]
+bm = mp[4]
+ah = mp[5]
+bh = mp[6]
+an = mp[7]
+bn = mp[8]
 
 # Define alpha and beta representations
 
@@ -242,9 +176,9 @@ def nakl(t, y, P):
     dydt = np.zeros_like(y)
 
     dydt[:,0] = (I_inj(t) - I_na - I_l - I_k) / C_m
-    dydt[:,1] = alpha_spline(v, "m", vBias) * 1000 * (1 - m) - beta_spline(v, "m", vBias) * 1000 * m
-    dydt[:,2] = alpha_spline(v, "h", vBias) * 100 * (1 - h) - beta_spline(v, "h", vBias) * 100 * h
-    dydt[:,3] = alpha_spline(v, "n", vBias) * 10 * (1 - n) - beta_spline(v, "n", vBias) * 10 * n
+    dydt[:,1] = alpha_spline(v, "m", vBias) * (1 - m) - beta_spline(v, "m", vBias) * m
+    dydt[:,2] = alpha_spline(v, "h", vBias) * (1 - h) - beta_spline(v, "h", vBias) * h
+    dydt[:,3] = alpha_spline(v, "n", vBias) * (1 - n) - beta_spline(v, "n", vBias) * n
     
     return dydt
 
@@ -264,8 +198,8 @@ RM = 1.0 / (0.5**2)
 RF0 = 4.0e-6
 
 # alpha, and beta ladder
-alpha = 1.1
-beta_array = np.linspace(0, 100, 101)
+alpha = 1.3
+beta_array = np.linspace(0, 200, 201)
 #beta_array = np.linspace(0, 10, 11)
 
 g0 = RF0/RM
@@ -276,7 +210,7 @@ gammas_all = g0 * alpha**beta_array
 
 
 
-data = np.load(os.get_cwd() + "/ode_data.npy")
+data = np.load(os.getcwd() + "/ode_data.npy")
 times_data = data[:, 0]
 dt_data = times_data[1] - times_data[0]
 N_data = len(times_data)
@@ -284,27 +218,6 @@ N_data = len(times_data)
 #extracting observed data here
 data = data[:, 1:]
 data = data[:, Lidx]
-
-
-# #### View observed data
-
-
-fig, ax = plt.subplots(4,1, sharex=True)
-fig.set_tight_layout(True)
-
-ax[0].plot(times_data, data[:,0])
-ax[0].set_ylabel('v')
-
-ax[1].plot(times_data, data[:,1])
-ax[1].set_ylabel('m')
-
-ax[2].plot(times_data, data[:,2])
-ax[2].set_ylabel('h')
-
-ax[3].plot(times_data, data[:,3])
-ax[3].set_ylabel('n')
-
-plt.show()
 
 
 # Set $\Delta t_f$ based on $\Delta t$.
@@ -417,8 +330,7 @@ anneal1.save_action_errors("neurodyn/action_errors.npy")#saves action and consti
 allpaths = np.load("neurodyn/paths.npy")
 aerr = np.load("neurodyn/action_errors.npy")
 params = np.load("neurodyn/params.npy")
-# Load the true solution
-true_soln = np.load("/Users/alexanderjulianty/neurodyn/ode_data.npy")
+
 
 
 
