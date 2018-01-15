@@ -1,0 +1,72 @@
+simple_nakl
+4,57,0,1,0,1
+(200.0/1024.0*Imas*(1+eImNa)*mm**3*hh*kchl*((Voffset + 200.0/1024.0*Ivol*(1+eIvNa)*0.00163) - VV) + 200.0/1024.0*Imas*(1+eImK)*nn**4*kchl*(1+ekPat)*((Voffset - 200.0/1024.0*Ivol*(1+eIvK)*0.00163) - VV) + 200.0/1024.0*Imas*(1+eImL)*kchl*(1+ekLea)*((Voffset - 200.0/1024.0*Ivol*(1+eIvL)*0.00163) - VV)+ offsetI+KK*Iinj)/0.004
+0.0376/0.005*Imas*((1+eIam1)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol))*13.46)) + (1+eIam2)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  -1.0*(0.0005826*Ivol))*13.46)) + (1+eIam3)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  - 2.0*(0.0005826*Ivol))*13.46)) + (1+eIam4)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  - 3.0*(0.0005826*Ivol))*13.46)) + (1+eIam5)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  - 4.0*(0.0005826*Ivol))*13.46)) + (1+eIam6)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol) - 5.0*(0.0005826*Ivol))*13.46)) + (1+eIam7)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  - 6*(0.0005826*Ivol))*13.46)))*(1.0 - mm) - 0.0376/0.005*Imas*((1+eIbm1)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol))*13.46)) + (1+eIbm2)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  - (0.0005826*Ivol))*13.46)) + (1+eIbm3)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)   - 2.0*(0.0005826*Ivol))*13.46)) + (1+eIbm4)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  - 3.0*(0.0005826*Ivol))*13.46)) + (1+eIbm5)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  - 4.0*(0.0005826*Ivol))*13.46)) + (1+eIbm6)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  - 5.0*(0.0005826*Ivol))*13.46)) + (1+eIbm7)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  - 6.0*(0.0005826*Ivol))*13.46)))*mm
+0.0376/0.005*Imas*((1+eIah1)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol) )*13.46)) + (1+eIah2)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  -1.0*(0.0005826*Ivol))*13.46)) + (1+eIah3)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  - 2.0*(0.0005826*Ivol))*13.46)) + (1+eIah4)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  - 3.0*(0.0005826*Ivol))*13.46)) + (1+eIah5)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  - 4.0*(0.0005826*Ivol))*13.46)) + (1+eIah6)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol) - 5.0*(0.0005826*Ivol))*13.46)) + (1+eIah7)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  - 6*(0.0005826*Ivol))*13.46)))*(1.0 - hh) - 0.0376/0.005*Imas*((1+eIbh1)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  )*13.46)) + (1+eIbh2)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  - (0.0005826*Ivol))*13.46)) + (1+eIbh3)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)   - 2.0*(0.0005826*Ivol))*13.46)) + (1+eIbh4)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  - 3.0*(0.0005826*Ivol))*13.46)) + (1+eIbh5)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol) - 4.0*(0.0005826*Ivol))*13.46)) + (1+eIbh6)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  - 5.0*(0.0005826*Ivol))*13.46)) + (1+eIbh7)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  - 6.0*(0.0005826*Ivol))*13.46)))*hh
+0.0376/0.005*Imas*((1+eIan1)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol))*13.46)) + (1+eIan2)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  -1.0*(0.0005826*Ivol))*13.46)) + (1+eIan3)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  - 2.0*(0.0005826*Ivol))*13.46)) + (1+eIan4)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  - 3.0*(0.0005826*Ivol))*13.46)) + (1+eIan5)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  - 4.0*(0.0005826*Ivol))*13.46)) + (1+eIan6)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol) - 5.0*(0.0005826*Ivol))*13.46)) + (1+eIan7)*(200.0)*0.5*(1.0 + tanh((VV - (Voffset-0.0016*Ivol)  - 6*(0.0005826*Ivol))*13.46)))*(1.0 - nn) - 0.0376/0.005*Imas*((1+eIbn1)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  )*13.46)) + (1+eIbn2)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  - (0.0005826*Ivol))*13.46)) + (1+eIbn3)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol) - 2.0*(0.0005826*Ivol))*13.46)) + (1+eIbn4)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  - 3.0*(0.0005826*Ivol))*13.46)) + (1+eIbn5)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol) - 4.0*(0.0005826*Ivol))*13.46)) + (1+eIbn6)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  - 5.0*(0.0005826*Ivol))*13.46)) + (1+eIbn7)*(200.0)*0.5*(1.0 + tanh(-(VV - (Voffset-0.0016*Ivol)  - 6.0*(0.0005826*Ivol))*13.46)))*nn
+(VV + offset1 - Vmeas1)**2
+VV
+mm
+hh
+nn
+Imas
+Ivol
+kchl
+ekPat
+ekLea
+eImNa
+eIvNa
+eImK
+eIvK
+eImL
+eIvL
+eIam1
+eIam2
+eIam3
+eIam4
+eIam5
+eIam6
+eIam7
+eIbm1
+eIbm2
+eIbm3
+eIbm4
+eIbm5
+eIbm6
+eIbm7
+eIah1
+eIah2
+eIah3
+eIah4
+eIah5
+eIah6
+eIah7
+eIbh1
+eIbh2
+eIbh3
+eIbh4
+eIbh5
+eIbh6
+eIbh7
+eIan1
+eIan2
+eIan3
+eIan4
+eIan5
+eIan6
+eIan7
+eIbn1
+eIbn2
+eIbn3
+eIbn4
+eIbn5
+eIbn6
+eIbn7
+Voffset
+offset1
+offsetI
+KK
+# Measurements
+Vmeas1
+#Vmeas2
+Iinj

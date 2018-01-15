@@ -1,0 +1,29 @@
+# N/2 (total data is 4001 steps, at dt = 0.01)
+2000
+# Skipped data (none)
+0
+# Twice the timestep of the data file (data taken at 50 kHz)
+0.04
+# Input format of files (1: single data set, initial condition file)
+0
+# Measured data file paths (one for each measurement)
+./input_data/voltage_measured.dat
+./input_data/m_measured.dat
+./input_data/h_measured.dat
+./input_data/n_measured.dat
+./input_data/current.dat
+# State variable bounds and Rf0 values
+0.70,1.50,1e1
+0, 1,1e1
+0, 1,1e1
+0, 1,1e1
+# Control variable bounds (none)
+# Parameter bounds (plus true values and names, which aren't read)
+24,28,26.2920, gNa
+1,1.2,1.1098, ENa
+4,6,5.2584, gK
+0.85,0.97,0.9231, EK
+0.40,0.57,0.4929, gL
+0.86,1.00,0.9304, EL
+# Anneal settings
+2,1,5
