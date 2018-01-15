@@ -4,32 +4,19 @@ from scipy import interpolate
 from varanneal import va_ode
 import os, sys, time
 import pickle
+
 from varanneal import va_ode
 
 # For running this on the cluster
 initID = int(sys.argv[1])
 adolcID = int(sys.argv[2])
 
-#############
-# Options
-############
-# Annealing Hyperparameters
-alpha = 1.3
-#beta_array = np.linspace(0, 200, 201)
-beta_array = np.linspace(0, 10, 11)
-
-# Setting ranges for initial guesses
-# r controls the size of the search space of the parameters
-r = 0.5
-
-
-
 # ## Define the ODE system
 
 # Load in the input current
 
-#TO DO: save and load the input current
-Ipath = "IforRealNeuron.csv"
+
+Ipath = os.getcwd() + "/IforRealNeuron.csv"
 Idat = np.genfromtxt(Ipath, delimiter=',')
 
 # Load in the parameters
@@ -169,6 +156,9 @@ def nakl(t, y, P):
     return dydt
 
 
+# #### Action/annealing (hyper)parameters
+
+
 # Model system dimension
 D = 4
 
@@ -180,15 +170,20 @@ Lidx = [0, 1, 2, 3]
 RM = 1.0 / (0.5**2)
 RF0 = 4.0e-6
 
+# alpha, and beta ladder
+alpha = 1.3
+beta_array = np.linspace(0, 200, 201)
+#beta_array = np.linspace(0, 10, 11)
 
-# setting up the alpha and beta ladder
 g0 = RF0/RM
 gammas_all = g0 * alpha**beta_array
 
 
 # #### Load observed data
 
-data = np.load("results/ode_data.npy")
+
+
+data = np.load(os.getcwd() + "/ode_data.npy")
 times_data = data[:, 0]
 dt_data = times_data[1] - times_data[0]
 N_data = len(times_data)
@@ -224,7 +219,10 @@ n_params = 55
 # Parameters
 Pidx = np.arange(0,n_params)
 
-# Packaging the parameters
+
+# Setting ranges for initial guesses
+# r controls the size of the search space of the parameters
+r = 0.5
 Pg = []
 
 # In case we want to estimate a subset of the full parameter set
@@ -298,6 +296,6 @@ print("\nADOL-C annealing completed in %f s."%(time.time() - tstart))
 
 anneal1.save_paths("results/paths/paths_%d.npy" % (initID)) #state paths
 anneal1.save_params("results/params/params_%d.npy" % (initID))
-anneal1.save_action_errors("results/action_errors/action_errors%d.npy" % (initID))#saves action and constituent errors
+anneal1.save_action_errors("results/boom/action_errors/action_errors%d.npy" % (initID))#saves action and constituent errors
 
 

@@ -11,7 +11,7 @@ import pickle
 import os
 import time
 
-Ipath = os.getcwd() + "/IforRealNeuron.csv"
+Ipath = "IforRealNeuron.csv"
 
 Idat = np.genfromtxt(Ipath, delimiter=',')
 
@@ -108,7 +108,7 @@ with open("model_parameters/model_params.txt", "wb") as fp:
     pickle.dump(model_params ,fp)
 
 # Save scaling values for later
-np.save('neurodyn/scale_factors.npy', scale_factors)
+np.save('model_parameters/scale_factors.npy', scale_factors)
 
     
 # Define the model
