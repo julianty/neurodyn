@@ -11,7 +11,7 @@
 import os
 
 
-Ninit = 100
+Ninit = 10
 
 SGE_TASK_ID = int(os.getenv("SGE_TASK_ID", 0))
 
