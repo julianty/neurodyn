@@ -26,4 +26,4 @@ print(os.system("uname -n"))
 #if i_M == 4:
 #    print("Skipping M=1000 case.")
 #else:
-os.system("python2 ./varanneal/VarAnneal_Neurodyn.py  %d %d"%(initID, M[i_M], D_hidden[i_DH], adolcID))
+os.system("python2 ./varanneal/VarAnneal_Neurodyn.py  %d %d"%(initID, adolcID))
