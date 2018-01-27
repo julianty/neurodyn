@@ -29,12 +29,12 @@ r = 0.5
 # Load in the input current
 
 #TO DO: save and load the input current
-Ipath = "IforRealNeuron.csv"
+Ipath = "varanneal/IforRealNeuron.csv"
 Idat = np.genfromtxt(Ipath, delimiter=',')
 
 # Load in the parameters
-sf = np.load("model_parameters/scale_factors.npy")
-with open("model_parameters/model_params.txt", "rb") as fp:
+sf = np.load("varanneal/boom/model_parameters/scale_factors.npy")
+with open("varanneal/boom/model_parameters/model_params.txt", "rb") as fp:
     model_params = pickle.load(fp)
 
 # Unpack scale factors
@@ -188,7 +188,7 @@ gammas_all = g0 * alpha**beta_array
 
 # #### Load observed data
 
-data = np.load("results/ode_data.npy")
+data = np.load("varanneal/boom/results/ode_data.npy")
 times_data = data[:, 0]
 dt_data = times_data[1] - times_data[0]
 N_data = len(times_data)
@@ -296,8 +296,8 @@ print("\nADOL-C annealing completed in %f s."%(time.time() - tstart))
 # # Save action, constituent errors, and state/parameter estimates to file.
 
 
-anneal1.save_paths("results/paths/paths_%d.npy" % (initID)) #state paths
-anneal1.save_params("results/params/params_%d.npy" % (initID))
-anneal1.save_action_errors("results/action_errors/action_errors%d.npy" % (initID))#saves action and constituent errors
+anneal1.save_paths("varanneal/boom/results/paths/paths_%d.npy" % (initID)) #state paths
+anneal1.save_params("varanneal/boom/results/params/params_%d.npy" % (initID))
+anneal1.save_action_errors("varanneal/boom/results/action_errors/action_errors%d.npy" % (initID))#saves action and constituent errors
 
 

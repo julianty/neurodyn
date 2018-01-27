@@ -1,4 +1,4 @@
-#!/share/apps/opt/python/2.7.9/bin/python2
+0;95;0c#!/share/apps/opt/python/2.7.9/bin/python2
 #$ -S /share/apps/opt/python/2.7.9/bin/python2
 #$ -V
 #$ -cwd
@@ -26,4 +26,4 @@ print(os.system("uname -n"))
 #if i_M == 4:
 #    print("Skipping M=1000 case.")
 #else:
-os.system("python2 ./varanneal/VarAnneal_Neurodyn.py  %d %d"%(initID, adolcID))
+os.system("python2 ./varanneal/boom/VarAnneal_Neurodyn.py  %d %d"%(initID, adolcID))
