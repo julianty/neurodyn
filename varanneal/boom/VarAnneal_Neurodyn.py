@@ -296,7 +296,7 @@ print("\nADOL-C annealing completed in %f s."%(time.time() - tstart))
 
 # # Save action, constituent errors, and state/parameter estimates to file.
 
-savedir = savedir + "_" + str(n_params)
+savedir = savedir + "_P" + str(n_params)
 anneal1.save_paths("results/%s/paths_%d.npy" % (savedir, initID)) #state paths
 anneal1.save_params("results/%s/params_%d.npy" % (savedir, initID))
 anneal1.save_action_errors("results/%s/action_errors%d.npy" % (savedir,initID))#saves action and constituent errors
