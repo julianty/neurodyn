@@ -219,8 +219,8 @@ else:
 # vector. In other words, this is an array of state vectors at all "model times".
 X0 = (20.0*np.random.rand(N_model * D) - 10.0).reshape((N_model, D))
 
-#n_params = 6
-n_params = 55
+n_params = 6
+#n_params = 55
 # Parameters
 Pidx = np.arange(0,n_params)
 
@@ -274,7 +274,8 @@ anneal1.set_data(data, t=times_data)
 
 # First set some options for the optimization.
 # Bounds [v], [m], [h], [n]
-bounds = [[0 * V_scale, 1.5 * V_scale], [0.0, 1.0], [0.0, 1.0], [0.0, 1.0]]
+mhn_scale = I_scale / (V_scale * C_scale)
+bounds = [[0 * V_scale, 1.5 * V_scale], [0.0, 1.0 * mhn_scale], [0.0, 1.0 * mhn_scale], [0.0, 1.0 * mhn_scale]]
 for i in xrange(len(Pidx)):
     bounds.append(Pg[i])
     
