@@ -9,14 +9,14 @@ from varanneal import va_ode
 # For running this on the cluster
 initID = int(sys.argv[1])
 adolcID = int(sys.argv[2])
-savedir = "test"
+savedir = "original_data"
 #############
 # Options
 ############
 # Annealing Hyperparameters
 alpha = 1.1
-#beta_array = np.linspace(0, 400, 401)
-beta_array = np.linspace(0, 10, 11)
+beta_array = np.linspace(0, 400, 401)
+#beta_array = np.linspace(0, 10, 11)
 
 # Setting ranges for initial guesses
 # r controls the size of the search space of the parameters
