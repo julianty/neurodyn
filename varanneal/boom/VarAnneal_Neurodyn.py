@@ -9,14 +9,14 @@ from varanneal import va_ode
 # For running this on the cluster
 initID = int(sys.argv[1])
 adolcID = int(sys.argv[2])
-savedir = "test"
+savedir = "original_data"
 #############
 # Options
 ############
 # Annealing Hyperparameters
 alpha = 1.1
-#beta_array = np.linspace(0, 400, 401)
-beta_array = np.linspace(0, 10, 11)
+beta_array = np.linspace(0, 400, 401)
+#beta_array = np.linspace(0, 10, 11)
 
 # Setting ranges for initial guesses
 # r controls the size of the search space of the parameters
@@ -219,8 +219,8 @@ else:
 # vector. In other words, this is an array of state vectors at all "model times".
 X0 = (20.0*np.random.rand(N_model * D) - 10.0).reshape((N_model, D))
 
-n_params = 6
-#n_params = 55
+#n_params = 6
+n_params = 55
 # Parameters
 Pidx = np.arange(0,n_params)
 
@@ -296,9 +296,9 @@ print("\nADOL-C annealing completed in %f s."%(time.time() - tstart))
 
 # # Save action, constituent errors, and state/parameter estimates to file.
 
-
+savedir = savedir + "_P" + str(n_params)
 anneal1.save_paths("results/%s/paths_%d.npy" % (savedir, initID)) #state paths
 anneal1.save_params("results/%s/params_%d.npy" % (savedir, initID))
-anneal1.save_action_errors("results/%s/action_errors%d.npy" % (savedir, initID))#saves action and constituent errors
+anneal1.save_action_errors("results/%s/action_errors%d.npy" % (savedir,initID))#saves action and constituent errors
 
 
